@@ -13,5 +13,10 @@ namespace FoodMenu.Web.Controllers
             return View();
         }
 
+
+        public ActionResult part()
+        {
+            return View();
+        }
     }
 }

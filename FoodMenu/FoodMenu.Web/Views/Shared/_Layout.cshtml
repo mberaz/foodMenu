@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
     <link href="~/Content/Site.css" rel="stylesheet" />
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -62,6 +62,12 @@
     <script src="~/Scripts/js.cookie.js"></script>
     <script src="~/Scripts/jquery.blockUI.js"></script>
     <script src="~/Scripts/bootbox.min.js"></script>
+    <script src="~/JS/Common.js"></script>
+
+    <script type="text/javascript">
+        common.initLoadingAnimation();
+    </script>
+
     @RenderSection("scripts", required: false)
 </body>
 </html>
