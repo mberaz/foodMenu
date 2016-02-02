@@ -1,42 +1,63 @@
-﻿using System;
+﻿using FoodMenu.BL;
+using FoodMenu.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace FoodMenu.WebApi.Controllers
 {
-    [Route("User", Name = "users")]
+    [RoutePrefix("User" )]
     public class UsersController : ApiController
     {
-        // GET api/values
-        [Route("", Name = "getUsers")]
-        [HttpGet]
-        public IEnumerable<string> Get ()
+        UsersBL usersBl;
+        public UsersController()
         {
-            return new string[] { "value1", "value2" };
+            usersBl = new UsersBL();
+        }
+
+        // GET api/values
+        [Route("All",Name = "users")]
+        [HttpGet]
+        public async Task<IEnumerable<UserModel>> Get ()
+        {
+            return await usersBl.GetAll();
         }
 
         // GET api/values/5
-        public string Get ( int id )
+        [Route("{id}",Name = "user")]
+        [HttpGet]
+        public async Task<UserModel> Get ( int id )
         {
-            return "value";
+            return await usersBl.GetByID(id);
         }
 
         // POST api/values
-        public void Post ( [FromBody]string value )
+        [Route("",Name = "CreateUser")]
+        [HttpPost]
+        public async Task<int> Post (UserModel user )
         {
+            return await usersBl.Create(user);
         }
 
         // PUT api/values/5
-        public void Put ( int id, [FromBody]string value )
+        [Route("{id}",Name = "UpdateUser")]
+        [HttpPut]
+        public async Task<bool> Put ( int id,UserModel user)
         {
+            user.Id = id;
+            return await usersBl.Update(user);
         }
 
         // DELETE api/values/5
-        public void Delete ( int id )
+        [Route("{id}",Name = "DeleteUser")]
+        [HttpDelete]
+        public async Task<bool> Delete ( int id )
         {
+            return await usersBl.Delete(id);
         }
     }
 }

@@ -71,6 +71,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\FoodMenu.BL\FoodMenu.BL.csproj">
+      <Project>{51d85c20-1a71-4c21-a317-dbcf43f5772a}</Project>
+      <Name>FoodMenu.BL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FoodMenu.Models\FoodMenu.Models.csproj">
       <Project>{733f6956-4ce1-442a-be5f-1aa12bbc4b9f}</Project>
       <Name>FoodMenu.Models</Name>
@@ -86,6 +90,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="files\users.json" />
     <None Include="packages.config" />
   </ItemGroup>
   <Choose>

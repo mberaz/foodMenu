@@ -1,40 +1,44 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Catel.Data;
-using FoodMenu.Repositories;
-
+using System.Threading.Tasks;
+using FoodMenu.BL;
+using FoodMenu.Models;
 
 namespace FoodMenu.Tests
 {
     [TestClass]
     public class UsersTests
     {
+        public static UsersBL usersBL;
         [ClassInitialize]
-        public static void Init(TestContext test)
+        public static void Init ( TestContext test )
         {
-            FoodMenu.RepositoryUtils.SetDbContextType();
+            RepositoryUtils.SetDbContextType();
+            usersBL = new UsersBL();
 
         }
 
+
         [TestMethod]
-        public void InserUser()
+        public async Task InserUser_OK ()
         {
-            using (var session = new UnitOfWork<FoodMenuEntities>())
-            {
-                var userRepository = session.GetRepository<IUserRepository>();
-                var user = new User();
-                user.Id = 1;
-                user.Email = "mbearz@gmail.com";
-                user.Password = "123456";
-                user.FirstName = "michael";
-                user.LastName = "berezin";
-                userRepository.Add(user);
+            var user = new UserModel();
 
-                session.SaveChanges();
+            var ticks = DateTime.Now.Ticks.ToString().Substring(6);
+            user.Email = $"mbearz{ticks}@gmail.com";
+            user.Password = "123456";
+            user.FirstName = "michael";
+            user.LastName = "berezin";
 
+            var id = await usersBL.Create(user);
+            Assert.AreNotEqual(id,0);
+        }
 
-                Assert.AreNotEqual(user.Id,0);
-            }
+        [TestMethod]
+        public async Task GetUser_OK ()
+        {
+            var user = await usersBL.GetByID(1);
+            Assert.AreNotEqual(user,null);
         }
     }
 }
