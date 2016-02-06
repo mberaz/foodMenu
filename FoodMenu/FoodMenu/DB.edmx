@@ -5,7 +5,29 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="FoodMenuModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="User">
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="50" />
+          <Property Name="Nationalid" Type="nchar" MaxLength="15" Nullable="false" />
+          <Property Name="Sex" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="Height" Type="int" Nullable="false" />
+          <Property Name="Weight" Type="float" Nullable="false" />
+          <Property Name="FatPercentage" Type="int" Nullable="false" />
+          <Property Name="Goal" Type="nvarchar(max)" />
+          <Property Name="Pills" Type="nvarchar(max)" />
+          <Property Name="Supplement" Type="nvarchar(max)" />
+          <Property Name="RedirectedBy" Type="nvarchar" MaxLength="100" />
+          <Property Name="Price" Type="int" Nullable="false" />
+          <Property Name="RMR" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -15,17 +37,67 @@
           <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Token" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="LogoFile" Type="nvarchar" MaxLength="500" />
+          <Property Name="LogoFileBytes" Type="varbinary(max)" />
+          <Property Name="BusinessId" Type="nvarchar" MaxLength="50" />
+          <Property Name="Address" Type="nvarchar(max)" />
         </EntityType>
+        <Association Name="FK__Client__UserId__4AB81AF0">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Client" Type="Self.Client" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Client">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="FoodMenuModelStoreContainer">
-          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Client__UserId__4AB81AF0" Association="Self.FK__Client__UserId__4AB81AF0">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Client" EntitySet="Client" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="FoodMenuModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="FoodMenuEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Clients" EntityType="FoodMenuModel.Client" />
           <EntitySet Name="Users" EntityType="FoodMenuModel.User" />
+          <AssociationSet Name="FK__Client__UserId__4AB81AF0" Association="FoodMenuModel.FK__Client__UserId__4AB81AF0">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Client" EntitySet="Clients" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Nationalid" Type="String" Nullable="false" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="Sex" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Height" Type="Int32" Nullable="false" />
+          <Property Name="Weight" Type="Double" Nullable="false" />
+          <Property Name="FatPercentage" Type="Int32" Nullable="false" />
+          <Property Name="Goal" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Pills" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Supplement" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RedirectedBy" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Int32" Nullable="false" />
+          <Property Name="RMR" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="FoodMenuModel.FK__Client__UserId__4AB81AF0" FromRole="Client" ToRole="User" />
+        </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="Id" />
@@ -36,16 +108,62 @@
           <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Token" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="LogoFile" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="LogoFileBytes" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="BusinessId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Clients" Relationship="FoodMenuModel.FK__Client__UserId__4AB81AF0" FromRole="User" ToRole="Client" />
         </EntityType>
+        <Association Name="FK__Client__UserId__4AB81AF0">
+          <End Type="FoodMenuModel.User" Role="User" Multiplicity="1" />
+          <End Type="FoodMenuModel.Client" Role="Client" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Client">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="FoodMenuModelStoreContainer" CdmEntityContainer="FoodMenuEntities">
+          <EntitySetMapping Name="Clients">
+            <EntityTypeMapping TypeName="FoodMenuModel.Client">
+              <MappingFragment StoreEntitySet="Client">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="RMR" ColumnName="RMR" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="RedirectedBy" ColumnName="RedirectedBy" />
+                <ScalarProperty Name="Supplement" ColumnName="Supplement" />
+                <ScalarProperty Name="Pills" ColumnName="Pills" />
+                <ScalarProperty Name="Goal" ColumnName="Goal" />
+                <ScalarProperty Name="FatPercentage" ColumnName="FatPercentage" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="Height" ColumnName="Height" />
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
+                <ScalarProperty Name="Nationalid" ColumnName="Nationalid" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="FoodMenuModel.User">
-              <MappingFragment StoreEntitySet="User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="BusinessId" ColumnName="BusinessId" />
+                <ScalarProperty Name="LogoFileBytes" ColumnName="LogoFileBytes" />
+                <ScalarProperty Name="LogoFile" ColumnName="LogoFile" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="Token" ColumnName="Token" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="Email" ColumnName="Email" />

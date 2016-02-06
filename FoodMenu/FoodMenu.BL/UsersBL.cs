@@ -21,6 +21,8 @@ namespace FoodMenu.BL
                 user.Password = userModel.Password;
                 user.FirstName = userModel.FirstName;
                 user.LastName = userModel.LastName;
+                user.BusinessId = userModel.BusinessId;
+                user.Address = userModel.Address;
                 userRepository.Add(user);
 
                 await session.SaveChangesAsync();
@@ -42,7 +44,9 @@ namespace FoodMenu.BL
                         Email = u.Email,
                         Password = u.Password,
                         FirstName = u.FirstName,
-                        LastName = u.LastName
+                        LastName = u.LastName,
+                        BusinessId = u.BusinessId,
+                        Address = u.Address,
                     }).ToList();
 
                     return userList;
@@ -65,7 +69,9 @@ namespace FoodMenu.BL
                     Email = user.Email,
                     Password = user.Password,
                     FirstName = user.FirstName,
-                    LastName = user.LastName
+                    LastName = user.LastName,
+                    BusinessId = user.BusinessId,
+                    Address = user.Address,
                 };
 
                 return model;
@@ -74,19 +80,37 @@ namespace FoodMenu.BL
 
         public async Task<bool> Update (UserModel userModel)
         {
+            using(var session = new UnitOfWork<FoodMenuEntities>())
+            {
+                var userRepository = session.GetRepository<IUserRepository>();
+
+                var user = await userRepository.GetByID(userModel.Id);
+
+                user.Id = userModel.Id;
+                user.Email = userModel.Email;
+                user.Password = userModel.Password;
+                user.FirstName = userModel.FirstName;
+                user.LastName = userModel.LastName;
+                user.BusinessId = userModel.BusinessId;
+                user.Address = userModel.Address;
+                await session.SaveChangesAsync();
+
+                return true;
+            }
+        }
+
+        public async Task<bool> UpdateImage (int userId,string fileName,byte[] bytes)
+        {
             try
             {
                 using(var session = new UnitOfWork<FoodMenuEntities>())
                 {
                     var userRepository = session.GetRepository<IUserRepository>();
 
-                    var user = await userRepository.GetByID(userModel.Id);
+                    var user = await userRepository.GetByID(userId);
 
-                    user.Id = userModel.Id;
-                    user.Email = userModel.Email;
-                    user.Password = userModel.Password;
-                    user.FirstName = userModel.FirstName;
-                    user.LastName = userModel.LastName;
+                    user.LogoFile = fileName;
+                    user.LogoFileBytes = bytes;
                     await session.SaveChangesAsync();
 
                     return true;
@@ -108,7 +132,7 @@ namespace FoodMenu.BL
 
                 if(user != null)
                 {
-                    userRepository.Delete(user);
+                    user.IsActive = false;
                     await session.SaveChangesAsync();
                     return true;
                 }

@@ -1,0 +1,13 @@
+﻿ @section scripts
+{
+<script src="~/Scripts/jquery.form.js"></script>
+<script src="~/JS/testing/testingFile.js"></script>
+}
+
+ 
+<div>
+    <form action="http://localhost:52746/Upload/Files?id=@ViewBag.id" id="testForm" method="post" enctype="multipart/form-data">
+        <input type="file" name="logo" />
+        <button type="submit" class="btn btn-success" >submit</button>
+    </form>
+</div>

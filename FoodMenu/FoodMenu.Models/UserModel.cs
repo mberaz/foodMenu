@@ -11,5 +11,11 @@ namespace FoodMenu.Models
         public string Password { get; set; }
 
         public string Token { get; set; }
+
+        public bool IsActive { get; set; }
+        public string LogoFile { get; set; }
+        public byte[] LogoFileBytes { get; set; }
+        public string BusinessId { get; set; }
+        public string Address { get; set; }
     }
 }
