@@ -122,6 +122,29 @@ namespace FoodMenu.BL
             }
         }
 
+        public async Task<FileModel> GetLogo (int userId)
+        {
+            try
+            {
+                using(var session = new UnitOfWork<FoodMenuEntities>())
+                {
+                    var userRepository = session.GetRepository<IUserRepository>();
+
+                    var user = await userRepository.GetByID(userId);
+
+                    return new FileModel
+                    {
+                        Name=user.LogoFile,
+                        Bytes=user.LogoFileBytes
+                    };
+                }
+            }
+            catch(Exception x)
+            {
+                throw x;
+            }
+        }
+
         public async Task<bool> Delete (int userID)
         {
             using(var session = new UnitOfWork<FoodMenuEntities>())
