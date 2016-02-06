@@ -137,6 +137,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="JS\Common.js" />
     <Content Include="JS\HomeIndex.js" />
+    <Content Include="JS\WebApi.js" />
     <Content Include="Scripts\bootbox.min.js" />
     <Content Include="Scripts\bootstrap-modal.js" />
     <Content Include="Scripts\bootstrap.js" />

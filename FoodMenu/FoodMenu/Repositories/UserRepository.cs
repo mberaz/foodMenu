@@ -11,8 +11,9 @@ namespace FoodMenu.Repositories
 {
     public interface IUserRepository : IEntityRepository<User, int>
     {
-        User GetByID(int Id);
-        User GetUserByEmailAndPassword(string email, string password);
+        Task<User> GetByID (int Id);
+        Task<User> GetUserByEmailAndPassword (string email, string password);
+        Task<User> Authenticate (int userId,string token);
     }
 
     public class UsersRepository : EntityRepositoryBase<User, int>, IUserRepository
@@ -22,17 +23,22 @@ namespace FoodMenu.Repositories
             : base(dbContext)
         { }
 
-
-        public User GetByID(int Id)
+        public async Task<User> Authenticate (int userId,string token)
         {
-            var item = this.Find(p => p.Id == Id).SingleOrDefault();
+            User user =await this.SingleOrDefaultAsync(u => u.Id == userId && u.Token==token);
+            return  (user);
+        }
+
+        public async Task<User> GetByID (int Id)
+        {
+            var item =await this.SingleOrDefaultAsync(p => p.Id == Id) ;
             return item;
 
         }
 
-        public User GetUserByEmailAndPassword(string email, string password)
+        public async Task<User> GetUserByEmailAndPassword (string email, string password)
         {
-            User user = this.Find(u => u.Email == email && u.Password == password ).SingleOrDefault();
+            User user = await this.SingleOrDefaultAsync(u => u.Email == email && u.Password == password ) ;
             return user;
         }
 
