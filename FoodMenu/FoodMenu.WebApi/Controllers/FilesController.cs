@@ -11,21 +11,21 @@ using FoodMenu.BL;
 
 namespace FoodMenu.WebApi.Controllers
 {
-    [RoutePrefix("Upload")]
-    public class UploadController :ApiController
+    [RoutePrefix("Files")]
+    public class FilesController :ApiController
     {
 
         UsersBL usersBl;
-        public UploadController ()
+        public FilesController ()
         {
             usersBl = new UsersBL();
         }
-        [Route("Files")]
+        [Route("Upload")]
         [HttpPost]
         public async Task<IHttpActionResult> MyFileUpload ()
         {
             var test = Request.GetQueryNameValuePairs();
-            var id = test.First(f=>f.Key=="id").Value.ToInt();
+            var id = test.First(f => f.Key == "id").Value.ToInt();
 
             if(!Request.Content.IsMimeMultipartContent())
                 throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
@@ -35,17 +35,27 @@ namespace FoodMenu.WebApi.Controllers
             foreach(var file in provider.Contents)
             {
                 var filename = file.Headers.ContentDisposition.FileName.Trim('\"');
-
-                // var imageFolder = Utility.AppSetting("ImageFolderPath");
                 var buffer = await file.ReadAsByteArrayAsync();
-
-                // System.IO.File.WriteAllBytes(imageFolder + filename,buffer);
-
                 await usersBl.UpdateImage(id,filename,buffer);
 
             }
 
             return Ok();
         }
+
+        [Route("Logo/{id}")]
+        [HttpGet]
+        public async Task<HttpResponseMessage> GetFile (int id)
+        {
+            var image = await usersBl.GetLogo(id);
+
+            HttpResponseMessage result = Request.CreateResponse(HttpStatusCode.OK);
+            result.Content = new ByteArrayContent(image.Bytes);
+            result.Content.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment");
+            result.Content.Headers.ContentDisposition.FileName = image.Name;
+
+            return result;
+        }
     }
+
 }

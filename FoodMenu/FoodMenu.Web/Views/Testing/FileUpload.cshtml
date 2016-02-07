@@ -6,7 +6,7 @@
 
  
 <div>
-    <form action="http://localhost:52746/Upload/Files?id=@ViewBag.id" id="testForm" method="post" enctype="multipart/form-data">
+    <form action="@Helpers.BaseApiUrl()/Files/Upload?id=@ViewBag.id" id="testForm" method="post" enctype="multipart/form-data">
         <input type="file" name="logo" />
         <button type="submit" class="btn btn-success" >submit</button>
     </form>
@@ -14,4 +14,4 @@
 
 
 
-<img src="/Files/UserLogo/1" />
+<img src="@Helpers.BaseApiUrl()/Files/Logo/1" />
