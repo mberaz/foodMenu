@@ -1,17 +1,30 @@
-﻿var webApi = function () {
-    var self = this;
+﻿
+var webApi = {};
+webApi = function () {
+    var self = {};
+   
+    self.apiConnectionData = function () {
+        var cookie=Cookies.get('token');
+
+        return{
+            userId: cookie.split('~')[0],
+            accessToken: cookie.split('~')[1]
+        };
+       
+    }
 
     self.ajax=function(url,options)
     {
-        var api = self.apiConnectionData;//base api
+        var baseUrl = "http://localhost:52746/";
+        var api = options.allowAnon ? { userId: 0, accessToken: '' } : self.apiConnectionData();//base api
         var headers = {
             'client_id': api.userId,
-            'access_token': api.accessToken(),
+            'access_token': api.accessToken,
             'content-type': 'application/json'
         };
 
         var endOptions = $.extend({}, options, {
-            url: api.URL + actionUrl,
+            url: baseUrl + url,
             headers: headers
 
         });
@@ -28,4 +41,4 @@
 
 
     return self;
-};
+}();

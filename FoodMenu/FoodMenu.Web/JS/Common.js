@@ -62,26 +62,30 @@ common = function () {
             if (inp.hasClass("email-field") && !pub.validateEmail(inp.val().trim())) {
                 fieldValid=false;
                 errormsg = 'לא אמיל תקין';
-
             }
 
-            if (!(fieldValid)) {
-                var msg = inp.closest(".form-group").find('.error_msg');
-                if (msg.length == 0) {
-                    inp.after($("<p class='error_msg'>" + errormsg + " </p>"));
-                }
-
-                inp.addClass("error");
-                isValid = false;
-            }
-            else {
-                inp.closest(".form-group").find('.error_msg').remove();
-                inp.removeClass("error");
-            }
+            pub.validateField(fieldValid, inp, errormsg);
         });
 
+       
 
         return isValid;
+    }
+
+    pub.validateField = function (isValid, inp, errormsg) {
+        if (!(isValid)) {
+            var msg = inp.closest(".form-group").find('.error_msg');
+            if (msg.length == 0) {
+                inp.after($("<p class='error_msg'>" + errormsg + " </p>"));
+            }
+
+            inp.addClass("error");
+            isValid = false;
+        }
+        else {
+            inp.closest(".form-group").find('.error_msg').remove();
+            inp.removeClass("error");
+        }
     }
 
     pub.validateEmail=function(email) {

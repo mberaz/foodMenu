@@ -10,11 +10,20 @@ namespace FoodMenu.BL
 {
     public class UsersBL
     {
-        public async Task<int> Create (UserModel userModel)
+        public async Task<ReturnModel<UserModel>> Create (UserModel userModel)
         {
+            var result = new ReturnModel<UserModel> { Status = true };
             using(var session = new UnitOfWork<FoodMenuEntities>())
             {
                 var userRepository = session.GetRepository<IUserRepository>();
+
+                if(!(await userRepository.ValidateEmail(userModel.Email,userModel.Id)))
+                {
+                    result.Error = ("email in use");
+                    result.Status = false;
+                    return result;
+                }
+
                 var user = new User();
                 user.Id = userModel.Id;
                 user.Email = userModel.Email;
@@ -26,7 +35,11 @@ namespace FoodMenu.BL
                 userRepository.Add(user);
 
                 await session.SaveChangesAsync();
-                return user.Id;
+
+                userModel.Id = user.Id;
+                userModel.Token = Guid.NewGuid().ToString();
+                result.Result = userModel;
+                return result;
             }
         }
 
@@ -134,8 +147,8 @@ namespace FoodMenu.BL
 
                     return new FileModel
                     {
-                        Name=user.LogoFile,
-                        Bytes=user.LogoFileBytes
+                        Name = user.LogoFile,
+                        Bytes = user.LogoFileBytes
                     };
                 }
             }

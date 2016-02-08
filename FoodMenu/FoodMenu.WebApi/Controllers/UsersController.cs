@@ -10,11 +10,11 @@ using System.Web.Http;
 
 namespace FoodMenu.WebApi.Controllers
 {
-    [RoutePrefix("User" )]
-    public class UsersController : ApiController
+    [RoutePrefix("User")]
+    public class UsersController :ApiController
     {
         UsersBL usersBl;
-        public UsersController()
+        public UsersController ()
         {
             usersBl = new UsersBL();
         }
@@ -30,7 +30,7 @@ namespace FoodMenu.WebApi.Controllers
         // GET api/values/5
         [Route("{id}",Name = "user")]
         [HttpGet]
-        public async Task<UserModel> Get ( int id )
+        public async Task<UserModel> Get (int id)
         {
             return await usersBl.GetByID(id);
         }
@@ -38,7 +38,7 @@ namespace FoodMenu.WebApi.Controllers
         // POST api/values
         [Route("",Name = "CreateUser")]
         [HttpPost]
-        public async Task<int> Post (UserModel user )
+        public async Task<ReturnModel<UserModel>> Post (UserModel user)
         {
             return await usersBl.Create(user);
         }
@@ -46,7 +46,7 @@ namespace FoodMenu.WebApi.Controllers
         // PUT api/values/5
         [Route("{id}",Name = "UpdateUser")]
         [HttpPut]
-        public async Task<bool> Put ( int id,UserModel user)
+        public async Task<bool> Put (int id,UserModel user)
         {
             user.Id = id;
             return await usersBl.Update(user);
@@ -55,7 +55,7 @@ namespace FoodMenu.WebApi.Controllers
         // DELETE api/values/5
         [Route("{id}",Name = "DeleteUser")]
         [HttpDelete]
-        public async Task<bool> Delete ( int id )
+        public async Task<bool> Delete (int id)
         {
             return await usersBl.Delete(id);
         }

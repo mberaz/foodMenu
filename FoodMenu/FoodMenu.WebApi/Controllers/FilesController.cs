@@ -40,7 +40,7 @@ namespace FoodMenu.WebApi.Controllers
 
             }
 
-            return Ok();
+            return Ok(true);
         }
 
         [Route("Logo/{id}")]
