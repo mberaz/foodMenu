@@ -43,7 +43,7 @@ namespace FoodMenu.BL
             }
         }
 
-        public Task<List<UserModel>> GetAll ()
+        public Task<ReturnModel<List<UserModel>>> GetAll ()
         {
             return Task.Run(() =>
             {
@@ -62,12 +62,12 @@ namespace FoodMenu.BL
                         Address = u.Address,
                     }).ToList();
 
-                    return userList;
+                    return new ReturnModel<List<UserModel>> { Status = true,Result = userList };
                 }
             });
         }
 
-        public async Task<UserModel> GetByID (int userID)
+        public async Task<ReturnModel<UserModel>> GetByID (int userID)
         {
             UserModel model = new UserModel();
             using(var session = new UnitOfWork<FoodMenuEntities>())
@@ -76,22 +76,25 @@ namespace FoodMenu.BL
 
                 var user = await userRepository.GetByID(userID);
 
-                model = new UserModel()
+                return new ReturnModel<UserModel>
                 {
-                    Id = user.Id,
-                    Email = user.Email,
-                    Password = user.Password,
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    BusinessId = user.BusinessId,
-                    Address = user.Address,
+                    Status = true,
+                    Result = new UserModel()
+                    {
+                        Id = user.Id,
+                        Email = user.Email,
+                        Password = user.Password,
+                        FirstName = user.FirstName,
+                        LastName = user.LastName,
+                        BusinessId = user.BusinessId,
+                        Address = user.Address,
+                    }
                 };
-
-                return model;
-            }
+            };
         }
 
-        public async Task<bool> Update (UserModel userModel)
+
+        public async Task<ReturnModel<bool>> Update (UserModel userModel)
         {
             using(var session = new UnitOfWork<FoodMenuEntities>())
             {
@@ -108,11 +111,11 @@ namespace FoodMenu.BL
                 user.Address = userModel.Address;
                 await session.SaveChangesAsync();
 
-                return true;
+                return new ReturnModel<bool> { Status = true };
             }
         }
 
-        public async Task<bool> UpdateImage (int userId,string fileName,byte[] bytes)
+        public async Task<ReturnModel<bool>> UpdateImage (int userId,string fileName,byte[] bytes)
         {
             try
             {
@@ -126,7 +129,7 @@ namespace FoodMenu.BL
                     user.LogoFileBytes = bytes;
                     await session.SaveChangesAsync();
 
-                    return true;
+                    return new ReturnModel<bool> { Status = true };
                 }
             }
             catch(Exception x)
@@ -135,7 +138,7 @@ namespace FoodMenu.BL
             }
         }
 
-        public async Task<FileModel> GetLogo (int userId)
+        public async Task<ReturnModel<FileModel>> GetLogo (int userId)
         {
             try
             {
@@ -145,10 +148,15 @@ namespace FoodMenu.BL
 
                     var user = await userRepository.GetByID(userId);
 
-                    return new FileModel
+                    return new ReturnModel<FileModel>
                     {
-                        Name = user.LogoFile,
-                        Bytes = user.LogoFileBytes
+                        Status = true,
+                        Result = new FileModel
+                        {
+                            Name = user.LogoFile,
+                            Bytes = user.LogoFileBytes
+                        }
+
                     };
                 }
             }
@@ -158,7 +166,7 @@ namespace FoodMenu.BL
             }
         }
 
-        public async Task<bool> Delete (int userID)
+        public async Task<ReturnModel<bool>> Delete (int userID)
         {
             using(var session = new UnitOfWork<FoodMenuEntities>())
             {
@@ -170,19 +178,22 @@ namespace FoodMenu.BL
                 {
                     user.IsActive = false;
                     await session.SaveChangesAsync();
-                    return true;
+                    return new ReturnModel<bool> { Status = true };
                 }
                 else
                 {
-                    return false;
+                    return new ReturnModel<bool> { Status = false };
                 }
+
+
             }
 
 
         }
 
-        public async Task<UserModel> Authenticate (int userId,string token)
+        public async Task<ReturnModel<UserModel>> Authenticate (int userId,string token)
         {
+            var res = new ReturnModel<UserModel>();
             UserModel model = new UserModel();
             using(var session = new UnitOfWork<FoodMenuEntities>())
             {
@@ -190,7 +201,7 @@ namespace FoodMenu.BL
 
                 var user = await userRepository.Authenticate(userId,token);
 
-                return user == null ? null : new UserModel()
+                res.Result = user == null ? null : new UserModel()
                 {
                     Id = user.Id,
                     Email = user.Email,
@@ -199,10 +210,12 @@ namespace FoodMenu.BL
                     LastName = user.LastName,
                     Token = user.Token
                 };
+                res.Status = true;
+                return res;
             }
         }
 
-        public async Task<bool> Logout (int userId)
+        public async Task<ReturnModel<bool>> Logout (int userId)
         {
             try
             {
@@ -215,7 +228,7 @@ namespace FoodMenu.BL
                     user.Token = "";
                     await session.SaveChangesAsync();
 
-                    return true;
+                    return new ReturnModel<bool> { Status = true };
                 }
             }
             catch(Exception x)

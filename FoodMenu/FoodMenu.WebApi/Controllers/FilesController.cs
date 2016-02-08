@@ -50,9 +50,9 @@ namespace FoodMenu.WebApi.Controllers
             var image = await usersBl.GetLogo(id);
 
             HttpResponseMessage result = Request.CreateResponse(HttpStatusCode.OK);
-            result.Content = new ByteArrayContent(image.Bytes);
+            result.Content = new ByteArrayContent(image.Result.Bytes);
             result.Content.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment");
-            result.Content.Headers.ContentDisposition.FileName = image.Name;
+            result.Content.Headers.ContentDisposition.FileName = image.Result.Name;
 
             return result;
         }

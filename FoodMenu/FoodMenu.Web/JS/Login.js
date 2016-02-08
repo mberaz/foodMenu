@@ -9,7 +9,7 @@
             });
         });
     });
-        
+
     $(document).on('click', "#save-new-user", function () {
         var form = $("#userform");
         if (!common.validate(form)) {
@@ -20,7 +20,7 @@
         common.validateField(passwordMatch, $("#PasswordCnfrm"), "הסיסמה לא תואמת");
         common.validateField(passwordMatch, $("#Password"), "הסיסמה לא תואמת");
 
-       
+
         common.validateField($("#logoFile").val() !== '', $("#logoFile"), "לא נבחר קובץ תמונה");
 
         if (!passwordMatch || $("#logoFile").val() == '') {
@@ -29,17 +29,21 @@
 
         var obj = common.toObject(form);
         webApi.ajax("User", { type: "POST", data: ko.toJSON(obj), allowAnon: true }).done(function (result) {
-            var fileForm = $("#fileForm");
-            $("#fileForm").attr('action', fileForm.attr('data-action') + result.Result.Id);
-            token = result.Result.Id + "~" + result.Result.Token;
-            $("#fileForm").submit();
+            if (result.Status)
+            {
+                var fileForm = $("#fileForm");
+                $("#fileForm").attr('action', fileForm.attr('data-action') + result.Result.Id);
+                token = result.Result.Id + "~" + result.Result.Token;
+                $("#fileForm").submit();
+            }
+            else
+            {
+                bootbox.alert(result.Error);
+            }
+
+
         })
 
     });
 
-   
-
 });
-
-            
-	
