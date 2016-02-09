@@ -22,6 +22,7 @@ namespace FoodMenu.WebApi.Controllers
         }
         [Route("Upload")]
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IHttpActionResult> MyFileUpload ()
         {
             var test = Request.GetQueryNameValuePairs();

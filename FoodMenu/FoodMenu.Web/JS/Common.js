@@ -6,7 +6,7 @@ common = function () {
     var pub = {};
     var self = {};
 
-    pub.baseURl  = "http://localhost:52746/";
+    pub.baseURl = "http://localhost:52746/";
     pub.initLoadingAnimation = function (run) {
         $(document).ajaxStart(function (setting) {
             self.showLoadingAnimation($('body'))
@@ -21,7 +21,7 @@ common = function () {
         $(".dataTables_processing").css("visibility", "hidden");
         $.blockUI({
             message: '<img src="/content/images/loading.gif" />',
-            css: { width: '4%', border: '0px solid transparent', cursor: 'wait', backgroundColor: 'transparent', top: '15%' },
+            css: { width: '4%', border: '0px solid transparent', cursor: 'wait', backgroundColor: 'transparent', top: '15%' , right:'45%'},
             overlayCSS: { backgroundColor: '#FFFFFF', opacity: 0.0, cursor: 'wait' }
         });
     };
@@ -53,21 +53,20 @@ common = function () {
 
             var fieldValid = true;
             var errormsg = "";
-            if (inp.hasClass("required") && inp.val().trim() === '')
-            {
-                fieldValid=false;
+            if (inp.hasClass("required") && inp.val().trim() === '') {
+                fieldValid = false;
                 errormsg = 'שדה חובה';
             }
 
             if (inp.hasClass("email-field") && !pub.validateEmail(inp.val().trim())) {
-                fieldValid=false;
+                fieldValid = false;
                 errormsg = 'לא אמיל תקין';
             }
 
             pub.validateField(fieldValid, inp, errormsg);
         });
 
-       
+
 
         return isValid;
     }
@@ -88,7 +87,7 @@ common = function () {
         }
     }
 
-    pub.validateEmail=function(email) {
+    pub.validateEmail = function (email) {
         var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return re.test(email);
     }
@@ -106,6 +105,27 @@ common = function () {
 
         return obj;
     }
+
+
+    pub.hebrewDataTable = {
+
+        "sProcessing": "מעבד...",
+        "sLengthMenu": "הצג _MENU_ פריטים",
+        "sZeroRecords": "לא נמצאו רשומות מתאימות",
+        "sInfo": "_START_ עד _END_ מתוך _TOTAL_ רשומות",
+        "sInfoEmpty": "0 עד 0 מתוך 0 רשומות",
+        "sInfoFiltered": "(מסונן מסך _MAX_  רשומות)",
+        "sInfoPostFix": "",
+        "sSearch": "חפש:",
+        "sUrl": "",
+        "oPaginate": {
+            "sFirst": "ראשון",
+            "sPrevious": "קודם",
+            "sNext": "הבא",
+            "sLast": "אחרון"
+        }
+
+    };
 
     return pub;
 

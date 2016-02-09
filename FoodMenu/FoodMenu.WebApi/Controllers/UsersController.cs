@@ -1,5 +1,7 @@
-﻿using FoodMenu.BL;
+﻿using DataTablesParser;
+using FoodMenu.BL;
 using FoodMenu.Models;
+using FoodMenu.Utils;
 using FoodMenu.WebApi.Filters;
 using System;
 using System.Collections.Generic;
@@ -27,6 +29,21 @@ namespace FoodMenu.WebApi.Controllers
         public async Task<ReturnModel<List<UserModel>>> Get ()
         {
             return await usersBl.GetAll();
+        }
+
+        [Route("table",Name = "usersTable")]
+        [HttpGet]
+        public async Task<FormatedList<UserModel>> GetTable ()
+        {
+            try
+            {
+                var result = await usersBl.GetAll(Request.GetQueryStrings().ToNameValueCollection());
+                return result;
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         // GET api/values/5

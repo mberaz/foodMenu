@@ -1,8 +1,10 @@
 ﻿using Catel.Data;
+using DataTablesParser;
 using FoodMenu.Models;
 using FoodMenu.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -32,6 +34,7 @@ namespace FoodMenu.BL
                 user.LastName = userModel.LastName;
                 user.BusinessId = userModel.BusinessId;
                 user.Address = userModel.Address;
+                user.IsActive = true;
                 userRepository.Add(user);
 
                 await session.SaveChangesAsync();
@@ -41,6 +44,34 @@ namespace FoodMenu.BL
                 result.Result = userModel;
                 return result;
             }
+        }
+
+
+
+        public Task<FormatedList<UserModel>> GetAll (NameValueCollection requestParams)
+        {
+            return Task.Run(() =>
+            {
+                using(var session = new UnitOfWork<FoodMenuEntities>())
+                {
+                    IUserRepository userRepository = session.GetRepository<IUserRepository>();
+
+                    var userList = userRepository.GetAll().Where(u => u.IsActive).Select(u => new UserModel
+                    {
+                        Id = u.Id,
+                        Email = u.Email,
+                        Password = u.Password,
+                        FirstName = u.FirstName,
+                        LastName = u.LastName,
+                        BusinessId = u.BusinessId,
+                        Address = u.Address,
+                    });
+
+                    var parser = new DataTableEntityParser<UserModel>(requestParams,userList.AsQueryable());
+
+                    return parser.Parse();
+                }
+            });
         }
 
         public Task<ReturnModel<List<UserModel>>> GetAll ()
@@ -210,7 +241,7 @@ namespace FoodMenu.BL
                     LastName = user.LastName,
                     Token = user.Token
                 };
-                res.Status = user!= null;
+                res.Status = user != null;
                 return res;
             }
         }
@@ -246,15 +277,20 @@ namespace FoodMenu.BL
 
                 var user = await userRepository.GetUserByEmailAndPassword(email,password);
 
+                var token = refresh ? Guid.NewGuid().ToString() : user.Token;
+
+                user.Token = token;
+                await session.SaveChangesAsync();
+
                 var result = new ReturnModel<UserModel>();
-                result.Result= user == null ? null : new UserModel()
+                result.Result = user == null ? null : new UserModel()
                 {
                     Id = user.Id,
                     Email = user.Email,
                     Password = user.Password,
                     FirstName = user.FirstName,
                     LastName = user.LastName,
-                    Token = refresh ? Guid.NewGuid().ToString() : user.Token
+                    Token = token
                 };
 
                 result.Status = user != null;
