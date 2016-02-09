@@ -18,8 +18,8 @@ webApi = function () {
         var baseUrl = "http://localhost:52746/";
         var api = options.allowAnon ? { userId: 0, accessToken: '' } : self.apiConnectionData();//base api
         var headers = {
-            'client_id': api.userId,
-            'access_token': api.accessToken,
+            'userId': api.userId,
+            'token': api.accessToken,
             'content-type': 'application/json'
         };
 

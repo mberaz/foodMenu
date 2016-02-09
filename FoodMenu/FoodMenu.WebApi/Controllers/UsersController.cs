@@ -1,5 +1,6 @@
 ﻿using FoodMenu.BL;
 using FoodMenu.Models;
+using FoodMenu.WebApi.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,8 +11,9 @@ using System.Web.Http;
 
 namespace FoodMenu.WebApi.Controllers
 {
+    [ApiAuthorizationFilter]
     [RoutePrefix("User")]
-    public class UsersController :ApiController
+    public class UsersController :BaseApiController
     {
         UsersBL usersBl;
         public UsersController ()
@@ -38,6 +40,7 @@ namespace FoodMenu.WebApi.Controllers
         // POST api/values
         [Route("",Name = "CreateUser")]
         [HttpPost]
+        //[AllowAnonymous]
         public async Task<ReturnModel<UserModel>> Post (UserModel user)
         {
             return await usersBl.Create(user);

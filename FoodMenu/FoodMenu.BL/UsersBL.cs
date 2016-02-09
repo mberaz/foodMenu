@@ -19,7 +19,7 @@ namespace FoodMenu.BL
 
                 if(!(await userRepository.ValidateEmail(userModel.Email,userModel.Id)))
                 {
-                    result.Error = ("email in use");
+                    result.Error = ("כתובת האמייל כבר בשימוש.");
                     result.Status = false;
                     return result;
                 }
@@ -210,7 +210,7 @@ namespace FoodMenu.BL
                     LastName = user.LastName,
                     Token = user.Token
                 };
-                res.Status = true;
+                res.Status = user!= null;
                 return res;
             }
         }
@@ -237,7 +237,7 @@ namespace FoodMenu.BL
             }
         }
 
-        public async Task<UserModel> Login (string email,string password,bool refresh = true)
+        public async Task<ReturnModel<UserModel>> Login (string email,string password,bool refresh = true)
         {
             UserModel model = new UserModel();
             using(var session = new UnitOfWork<FoodMenuEntities>())
@@ -246,7 +246,8 @@ namespace FoodMenu.BL
 
                 var user = await userRepository.GetUserByEmailAndPassword(email,password);
 
-                return user == null ? null : new UserModel()
+                var result = new ReturnModel<UserModel>();
+                result.Result= user == null ? null : new UserModel()
                 {
                     Id = user.Id,
                     Email = user.Email,
@@ -256,6 +257,10 @@ namespace FoodMenu.BL
                     Token = refresh ? Guid.NewGuid().ToString() : user.Token
                 };
 
+                result.Status = user != null;
+                result.Error = "שם משתמש או סיסמה לא נכונים";
+
+                return result;
             }
         }
     }

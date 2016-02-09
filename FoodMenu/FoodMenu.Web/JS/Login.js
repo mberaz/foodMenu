@@ -10,6 +10,24 @@
         });
     });
 
+    $(document).on('click', "#login", function () {
+        var obj = common.toObject($(".form-signin"));
+
+        webApi.ajax("Account/Login", { type: "POST", data: ko.toJSON(obj), allowAnon: true }).done(function (result) {
+            if (result.Status) {
+                token = result.Result.Id + "~" + result.Result.Token;
+                Cookies.set('token', token);
+                window.location = "/";
+            }
+            else {
+                bootbox.alert(result.Error);
+            }
+
+        });
+
+    });
+
+
     $(document).on('click', "#save-new-user", function () {
         var form = $("#userform");
         if (!common.validate(form)) {
@@ -29,20 +47,17 @@
 
         var obj = common.toObject(form);
         webApi.ajax("User", { type: "POST", data: ko.toJSON(obj), allowAnon: true }).done(function (result) {
-            if (result.Status)
-            {
+            if (result.Status) {
                 var fileForm = $("#fileForm");
                 $("#fileForm").attr('action', fileForm.attr('data-action') + result.Result.Id);
                 token = result.Result.Id + "~" + result.Result.Token;
                 $("#fileForm").submit();
             }
-            else
-            {
+            else {
                 bootbox.alert(result.Error);
             }
 
-
-        })
+        });
 
     });
 
