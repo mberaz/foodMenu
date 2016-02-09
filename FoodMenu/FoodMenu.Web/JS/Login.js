@@ -13,11 +13,12 @@
     $(document).on('click', "#login", function () {
         var obj = common.toObject($(".form-signin"));
 
+        var redirect = window.location.search?window.location.search.replace("?returnUrl=",""):"";
         webApi.ajax("Account/Login", { type: "POST", data: ko.toJSON(obj), allowAnon: true }).done(function (result) {
             if (result.Status) {
                 token = result.Result.Id + "~" + result.Result.Token;
                 Cookies.set('token', token);
-                window.location = "/";
+                window.location = (redirect ? "/" : redirect);
             }
             else {
                 bootbox.alert(result.Error);

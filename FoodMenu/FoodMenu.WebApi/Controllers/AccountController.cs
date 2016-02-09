@@ -9,7 +9,7 @@ namespace FoodMenu.WebApi.Controllers
 {
     [RoutePrefix("Account")]
     [AllowAnonymous]
-    public class AccountController : ApiController
+    public class AccountController :ApiController
     {
         UsersBL usersBl;
         public AccountController ()
@@ -20,7 +20,7 @@ namespace FoodMenu.WebApi.Controllers
         // GET api/values
         [Route("Login",Name = "Login")]
         [HttpPost]
-        public async Task<ReturnModel< UserModel>> Login (UserModel model)
+        public async Task<ReturnModel<UserModel>> Login (LoginModel model)
         {
             return await usersBl.Login(model.Email,model.Password);
         }
