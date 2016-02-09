@@ -22,7 +22,7 @@ namespace FoodMenu.WebApi.Controllers
         }
 
         // GET api/values
-        [Route("All",Name = "users")]
+        [Route("",Name = "users")]
         [HttpGet]
         public async Task<ReturnModel<List<UserModel>>> Get ()
         {

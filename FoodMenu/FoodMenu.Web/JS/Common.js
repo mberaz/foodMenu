@@ -6,7 +6,7 @@ common = function () {
     var pub = {};
     var self = {};
 
-
+    pub.baseURl  = "http://localhost:52746/";
     pub.initLoadingAnimation = function (run) {
         $(document).ajaxStart(function (setting) {
             self.showLoadingAnimation($('body'))

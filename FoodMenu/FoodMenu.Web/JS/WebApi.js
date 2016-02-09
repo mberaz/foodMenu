@@ -2,7 +2,7 @@
 var webApi = {};
 webApi = function () {
     var self = {};
-   
+
     self.apiConnectionData = function () {
         var cookie=Cookies.get('token');
 
@@ -10,12 +10,12 @@ webApi = function () {
             userId: cookie.split('~')[0],
             accessToken: cookie.split('~')[1]
         };
-       
+
     }
 
     self.ajax=function(url,options)
     {
-        var baseUrl = "http://localhost:52746/";
+        //var baseUrl = "http://localhost:52746/";
         var api = options.allowAnon ? { userId: 0, accessToken: '' } : self.apiConnectionData();//base api
         var headers = {
             'userId': api.userId,
@@ -24,7 +24,7 @@ webApi = function () {
         };
 
         var endOptions = $.extend({}, options, {
-            url: baseUrl + url,
+            url: baseUrl + common.baseURl,
             headers: headers
 
         });
