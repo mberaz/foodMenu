@@ -106,6 +106,14 @@ common = function () {
         return obj;
     }
 
+    pub.loadObject=function(form,obj)
+    {
+        for (var prop in obj) {
+            var inp = form.find("input[name='{0}']".format(prop));
+            inp.val(obj[prop]);
+        }
+    }
+
 
     pub.hebrewDataTable = {
 

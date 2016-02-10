@@ -120,6 +120,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ClientsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\TestingController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
@@ -137,11 +138,16 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\images\loading.gif" />
     <Content Include="Content\login.css" />
+    <Content Include="Content\toastr.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="JS\Common.js" />
+    <Content Include="JS\extentions\arrayE10ntions - mdn.js" />
+    <Content Include="JS\extentions\dateE10ntions.js" />
+    <Content Include="JS\extentions\JqueryExtend.js" />
+    <Content Include="JS\extentions\stringE10ntions.js" />
     <Content Include="JS\UsersEdit.js" />
     <Content Include="JS\UsersIndex.js" />
     <Content Include="JS\Login.js" />
@@ -184,6 +190,7 @@
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\toastr.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -205,6 +212,8 @@
     <Content Include="Scripts\media\images\Sorting icons.psd" />
     <Content Include="Views\Users\index.cshtml" />
     <Content Include="Views\Users\EditUser.cshtml" />
+    <Content Include="Views\Users\_UserEdit.cshtml" />
+    <Content Include="Views\Clients\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

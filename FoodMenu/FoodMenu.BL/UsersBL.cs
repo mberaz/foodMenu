@@ -119,6 +119,7 @@ namespace FoodMenu.BL
                         LastName = user.LastName,
                         BusinessId = user.BusinessId,
                         Address = user.Address,
+                        LogoFile = user.LogoFile
                     }
                 };
             };

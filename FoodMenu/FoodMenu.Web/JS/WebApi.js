@@ -10,7 +10,6 @@ webApi = function () {
             userId: cookie.split('~')[0],
             accessToken: cookie.split('~')[1]
         };
-
     }
 
     self.getHeaders = function () {
