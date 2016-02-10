@@ -30,3 +30,9 @@ textarea {
 .error_msg{
     color:red;
 }
+
+
+.edit-user-full .user-form-button
+{
+    float:right;
+}

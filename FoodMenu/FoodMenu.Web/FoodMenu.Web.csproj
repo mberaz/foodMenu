@@ -142,7 +142,8 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="JS\Common.js" />
-    <Content Include="JS\HomeIndex.js" />
+    <Content Include="JS\UsersEdit.js" />
+    <Content Include="JS\UsersIndex.js" />
     <Content Include="JS\Login.js" />
     <Content Include="JS\testing\testingFile.js" />
     <Content Include="JS\WebApi.js" />
@@ -202,6 +203,8 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Users\Edit.cshtml" />
     <Content Include="Scripts\media\images\Sorting icons.psd" />
+    <Content Include="Views\Users\index.cshtml" />
+    <Content Include="Views\Users\EditUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

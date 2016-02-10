@@ -1,0 +1,13 @@
+﻿@section scripts
+{
+    <script src="~/JS/UsersEdit.js"></script>
+}
+
+<input type="hidden" id="id" value="@ViewBag.id" />
+<br/>
+<br/>
+<div class="row">
+    <div class="row col-md-8 edit-user-full">
+        @Html.Partial("Edit")
+    </div>
+</div>
