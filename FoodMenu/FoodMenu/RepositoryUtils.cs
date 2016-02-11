@@ -15,7 +15,7 @@ namespace FoodMenu
             var serviceLocator = ServiceLocator.Default;
 
             serviceLocator.RegisterType<IUserRepository, UsersRepository>();
-            //serviceLocator.RegisterType<ITeamsRepository, TeamsRepository>();
+            serviceLocator.RegisterType<IClientRepository,ClientRepository>();
             //serviceLocator.RegisterType<ITagsRepository, TagsRepository>();
             //serviceLocator.RegisterType<IEmployeesRepository, EmployeesRepository>();
             //serviceLocator.RegisterType<IKnowledgeRepository, KnowledgeRepository>();

@@ -61,6 +61,7 @@
     <Compile Include="DataTableEntityParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RepositoryHandler.cs" />
+    <Compile Include="ClientsBL.cs" />
     <Compile Include="UsersBL.cs" />
   </ItemGroup>
   <ItemGroup>

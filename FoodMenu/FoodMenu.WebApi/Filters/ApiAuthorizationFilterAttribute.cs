@@ -18,8 +18,6 @@ namespace FoodMenu.WebApi.Filters
         public const string User = "User";
         public const string IsAuthorized = "IsAuthorized";
 
-        private bool _ignoreTenantStateAuthorization = false;
-
         public override async Task OnAuthorizationAsync (HttpActionContext actionContext,System.Threading.CancellationToken cancellationToken)
         {
             var allowAnonymous = actionContext.ActionDescriptor.GetCustomAttributes<AllowAnonymousAttribute>().Any()
