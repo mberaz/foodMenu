@@ -16,7 +16,7 @@
         var redirect = window.location.search?window.location.search.replace("?returnUrl=",""):"";
         webApi.ajax("Account/Login", { type: "POST", data: ko.toJSON(obj), allowAnon: true }).done(function (result) {
             if (result.Status) {
-                token = result.Result.Id + "~" + result.Result.Token;
+                token = "{0}~{1}~{2}".format(result.Result.Id, result.Result.Token, result.Result.FirstName + " " + result.Result.LastName);
                 Cookies.set('token', token);
                 window.location = (redirect ? "/" : redirect);
             }
@@ -51,7 +51,7 @@
             if (result.Status) {
                 var fileForm = $("#fileForm");
                 $("#fileForm").attr('action', fileForm.attr('data-action') + result.Result.Id);
-                token = result.Result.Id + "~" + result.Result.Token;
+                token = "{0}~{1}~{2}".format(result.Result.Id, result.Result.Token, result.Result.FirstName + " " + result.Result.LastName);
                 $("#fileForm").submit();
             }
             else {

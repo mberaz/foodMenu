@@ -6,6 +6,14 @@ common = function () {
     var pub = {};
     var self = {};
 
+    pub.initApp = function () {
+        var api = webApi.apiConnectionData();
+
+        $("#userName-navbar").html(api.name);
+        $("#editUser-navbar").attr('href', "/users/EditUser" + api.userId);
+        
+    };
+
     pub.baseURl = "http://localhost:52746/";
     pub.initLoadingAnimation = function (run) {
         $(document).ajaxStart(function (setting) {
