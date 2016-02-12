@@ -1,10 +1,10 @@
 ﻿using Catel.Data;
 using DataTablesParser;
-using FoodMenu;
+
 using FoodMenu.Models;
 using FoodMenu.Repositories;
-using System;
-using System.Collections.Generic;
+
+using FoodMenu.Utils;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Threading.Tasks;
@@ -62,22 +62,31 @@ namespace FoodMenu.BL
                         Email = c.Email,
                         Phone = c.Phone,
                         Nationalid = c.Nationalid,
-                        Sex = c.Sex,
+                        Sex=c.Sex,
                         Height = c.Height,
                         Weight = c.Weight,
                         FatPercentage = c.FatPercentage,
-                        Goal = c.Goal,
-                        Pills = c.Pills,
-                        Supplement = c.Supplement,
-                        RedirectedBy = c.RedirectedBy,
+                        //Goal = c.Goal,
+                        //Pills = c.Pills,
+                        //Supplement = c.Supplement,
+                        //RedirectedBy = c.RedirectedBy,
                         Price = c.Price,
-                        RMR = c.RMR,
-                        UserId = c.UserId,
+                        //RMR = c.RMR,
+                        //UserId = c.UserId,
                     });
 
                     var parser = new DataTableEntityParser<ClientModel>(requestParams,ClientList.AsQueryable());
 
-                    return parser.Parse();
+                    var list= parser.Parse();
+                    foreach(var item in list.aaData)
+                    {
+                        var itemSex = item[4].ToInt();
+
+                        item[4] = Utility.GetDescription(itemSex, typeof(SexEnum));
+
+                    }
+
+                    return list;
                 }
             });
         }

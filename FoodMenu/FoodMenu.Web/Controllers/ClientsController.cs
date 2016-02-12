@@ -6,10 +6,15 @@ using System.Web.Mvc;
 
 namespace FoodMenu.Web.Controllers
 {
-    public class ClientsController : Controller
+    public class ClientsController :Controller
     {
         // GET: Clients
-        public ActionResult Index()
+        public ActionResult Index ()
+        {
+            return View();
+        }
+
+        public ActionResult EditClient (int id)
         {
             return View();
         }

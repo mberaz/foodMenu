@@ -19,7 +19,7 @@ namespace FoodMenu
         public string Email { get; set; }
         public string Phone { get; set; }
         public string Nationalid { get; set; }
-        public string Sex { get; set; }
+        public int Sex { get; set; }
         public int Height { get; set; }
         public double Weight { get; set; }
         public int FatPercentage { get; set; }

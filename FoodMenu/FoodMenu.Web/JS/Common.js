@@ -8,6 +8,10 @@ common = function () {
 
     pub.initApp = function () {
         var api = webApi.apiConnectionData();
+        if (!api)
+        {
+            window.location = "/account/login?returnUrl=" + window.location.pathname;
+        }
 
         $("#userName-navbar").html(api.name);
         $("#editUser-navbar").attr('href', "/users/EditUser" + api.userId);

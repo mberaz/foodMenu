@@ -149,6 +149,7 @@
     <Content Include="JS\extentions\JqueryExtend.js" />
     <Content Include="JS\extentions\stringE10ntions.js" />
     <Content Include="JS\UsersEdit.js" />
+    <Content Include="JS\ClientsIndex.js" />
     <Content Include="JS\UsersIndex.js" />
     <Content Include="JS\Login.js" />
     <Content Include="JS\testing\testingFile.js" />
@@ -214,6 +215,7 @@
     <Content Include="Views\Users\EditUser.cshtml" />
     <Content Include="Views\Users\_UserEdit.cshtml" />
     <Content Include="Views\Clients\Index.cshtml" />
+    <Content Include="Views\Clients\EditClient.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

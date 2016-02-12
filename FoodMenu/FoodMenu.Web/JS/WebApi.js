@@ -5,6 +5,11 @@ webApi = function () {
 
     self.apiConnectionData = function () {
         var cookie = Cookies.get('token');
+
+        if (!cookie)
+        {
+            return false;
+        }
         var parts=cookie.split('~');
         return {
             userId: parts[0],
