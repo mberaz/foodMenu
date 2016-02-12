@@ -1,0 +1,84 @@
+﻿@{
+    Layout = null;
+}
+
+<div>
+    <form role="form" id="editform">
+        <input type="hidden" class="form-control email-field required" name="UserId">
+        <div class="form-group">
+            <label for="email">כתובת אמייל :</label>
+            <input type="email" class="form-control email-field required" name="Email">
+        </div>
+       
+        <div class="form-group">
+            <label for="pwd">שם :</label>
+            <input type="text" class="form-control  required" name="Name">
+        </div>
+        <div class="form-group">
+            <label for="pwd">טלפון:</label>
+            <input type="text" class="form-control  required" name="Phone">
+        </div>
+
+        <div class="form-group">
+            <label for="pwd">מין:</label>
+            <div class="checkbox">
+                <label><input type="checkbox" class="required" name="Sex" value="1">זכר </label>
+            </div>
+
+            <div class="checkbox">
+                <label><input type="checkbox" class="required" name="Sex" value="2">נקבה </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="pwd">תז:</label>
+            <input type="text" class="form-control  required" name="Nationalid">
+        </div>
+        <div class="form-group">
+            <label for="pwd">משקל:</label>
+            <input type="text" class="form-control required" name="Weight">
+        </div>
+        <div class="form-group">
+            <label for="pwd">גבוה:</label>
+            <input type="text" class="form-control  required" name="Height">
+        </div>
+
+        <div class="form-group">
+            <label for="pwd">אחוז שומן:</label>
+            <input type="text" class="form-control  required" name="FatPercentage">
+        </div>
+        <div class="form-group">
+            <label for="pwd">מחיר:</label>
+            <input type="text" class="form-control required" name="Price">
+        </div>
+
+        <div class="form-group">
+            <label for="pwd">הופנה על ידי:</label>
+            <input type="text" class="form-control  required" name="RedirectedBy">
+        </div>
+        <div class="form-group">
+            <label for="pwd">RMR:</label>
+            <input type="text" class="form-control required" name="RMR">
+        </div>
+
+        <div class="form-group">
+            <label for="pwd">מטרות:</label>
+            <textarea class="form-control" name="Goal"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="pwd">תרופות:</label>
+            <textarea class="form-control" name="Pills"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="pwd">תוספים:</label>
+            <textarea class="form-control" name="Supplement"></textarea>
+        </div>
+
+    </form>
+
+    
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default save user-form-button" id="save-client">שמור</button>
+        <button type="button" class="btn btn-danger user-form-button" data-dismiss="modal">סגור</button>
+    </div>
+</div>

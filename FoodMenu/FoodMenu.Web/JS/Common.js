@@ -8,14 +8,13 @@ common = function () {
 
     pub.initApp = function () {
         var api = webApi.apiConnectionData();
-        if (!api)
-        {
+        if (!api) {
             window.location = "/account/login?returnUrl=" + window.location.pathname;
         }
 
         $("#userName-navbar").html(api.name);
         $("#editUser-navbar").attr('href', "/users/EditUser" + api.userId);
-        
+
     };
 
     pub.baseURl = "http://localhost:52746/";
@@ -33,7 +32,7 @@ common = function () {
         $(".dataTables_processing").css("visibility", "hidden");
         $.blockUI({
             message: '<img src="/content/images/loading.gif" />',
-            css: { width: '4%', border: '0px solid transparent', cursor: 'wait', backgroundColor: 'transparent', top: '15%' , right:'45%'},
+            css: { width: '4%', border: '0px solid transparent', cursor: 'wait', backgroundColor: 'transparent', top: '15%', right: '45%' },
             overlayCSS: { backgroundColor: '#FFFFFF', opacity: 0.0, cursor: 'wait' }
         });
     };
@@ -106,24 +105,45 @@ common = function () {
 
 
     pub.toObject = function (form) {
-        var inputs = form.find('input, select');
+        var inputs = form.find('input, select,textarea[type!="checkbox"]');
         var obj = {};
         inputs.each(function () {
             var inp = $(this);
 
-            obj[inp.attr("name")] = inp.val();
+            if (!inp.is(':checkbox')) {
+                obj[inp.attr("name")] = inp.val();
+            }
         });
+
+        var checkboxes = form.find('[type="checkbox"]');
+        checkboxes.each(function () {
+            var inp = $(this);
+
+            var name = inp.attr("name");
+            var val = $("[name='{0}']".format(name)).val();
+
+            obj[name] = val;
+
+        });
+
 
 
         return obj;
     }
 
-    pub.loadObject=function(form,obj)
-    {
+    pub.loadObject = function (form, obj) {
         for (var prop in obj) {
-            var inp = form.find("input[name='{0}']".format(prop));
-            inp.val(obj[prop]);
+            var inp = form.find("[name='{0}']".format(prop));
+
+            if (inp.is(':checkbox')) {
+                $("[name='{0}'][value='{1}']".format(prop, obj[prop])).check();
+            }
+            else {
+                inp.val(obj[prop]);
+            }
         }
+
+
     }
 
 

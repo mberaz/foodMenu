@@ -1,17 +1,15 @@
-﻿
-@{
-    Layout = null;
+﻿@section scripts
+{
+    <script src="/JS/ClientEdit.js"></script>
 }
 
-<!DOCTYPE html>
+<input type="hidden" id="id" value="@ViewBag.id" />
+<br />
+<br />
+<div class="row">
+    <div class="row col-md-8 edit-client-full">
+        @Html.Partial("Edit")
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>EditClient</title>
-</head>
-<body>
-    <div> 
     </div>
-</body>
-</html>
+</div>
+
