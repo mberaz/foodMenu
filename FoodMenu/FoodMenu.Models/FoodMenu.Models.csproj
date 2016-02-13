@@ -42,7 +42,9 @@
   <ItemGroup>
     <Compile Include="ClientModel.cs" />
     <Compile Include="FileModel.cs" />
+    <Compile Include="InvoiceModel.cs" />
     <Compile Include="LoginModel.cs" />
+    <Compile Include="MeetingModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReturnModel.cs" />
     <Compile Include="UserModel.cs" />

@@ -60,6 +60,8 @@
   <ItemGroup>
     <Compile Include="DataTableEntityParser.cs" />
     <Compile Include="Enums.cs" />
+    <Compile Include="InvoiceBL.cs" />
+    <Compile Include="MeetingBL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RepositoryHandler.cs" />
     <Compile Include="ClientsBL.cs" />

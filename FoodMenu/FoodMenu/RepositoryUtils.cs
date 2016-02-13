@@ -16,8 +16,8 @@ namespace FoodMenu
 
             serviceLocator.RegisterType<IUserRepository, UsersRepository>();
             serviceLocator.RegisterType<IClientRepository,ClientRepository>();
-            //serviceLocator.RegisterType<ITagsRepository, TagsRepository>();
-            //serviceLocator.RegisterType<IEmployeesRepository, EmployeesRepository>();
+            serviceLocator.RegisterType<IMeetingRepository,MeetingRepository>();
+            serviceLocator.RegisterType<IInvoiceRepository,InvoiceRepository>();
             //serviceLocator.RegisterType<IKnowledgeRepository, KnowledgeRepository>();
             //serviceLocator.RegisterType<ITaskRunsRepository, TaskRunsRepository>();
             //serviceLocator.RegisterType<ITasksRepository, TasksRepository>();

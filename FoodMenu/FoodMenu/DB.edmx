@@ -27,6 +27,39 @@
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="Invoice">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClientId" Type="int" Nullable="false" />
+          <Property Name="Notes" Type="nvarchar(max)" />
+          <Property Name="MeetingId" Type="int" Nullable="false" />
+          <Property Name="Number" Type="nvarchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Meeting">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClientId" Type="int" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="Weight" Type="int" Nullable="false" />
+          <Property Name="Water" Type="int" Nullable="false" />
+          <Property Name="Muscle" Type="int" Nullable="false" />
+          <Property Name="FatPercentage" Type="int" Nullable="false" />
+          <Property Name="MeetingIndex" Type="int" Nullable="false" />
+          <Property Name="ArmMuscleMeasurement" Type="int" Nullable="false" />
+          <Property Name="ArmNOMuscleMeasurement" Type="int" Nullable="false" />
+          <Property Name="HipMeasurement" Type="int" Nullable="false" />
+          <Property Name="StomachMeasurement" Type="int" Nullable="false" />
+          <Property Name="ThighMeasurement" Type="int" Nullable="false" />
+          <Property Name="FrontHandFat" Type="int" Nullable="false" />
+          <Property Name="BackHandFat" Type="int" Nullable="false" />
+          <Property Name="ThighFat" Type="int" Nullable="false" />
+          <Property Name="BackFat" Type="int" Nullable="false" />
+          <Property Name="FatAvrg" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Users">
           <Key>
             <PropertyRef Name="Id" />
@@ -55,12 +88,62 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Invoice__ClientI__5FB337D6">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="Invoice" Type="Self.Invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Invoice">
+              <PropertyRef Name="ClientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Invoice__Meeting__60A75C0F">
+          <End Role="Meeting" Type="Self.Meeting" Multiplicity="1" />
+          <End Role="Invoice" Type="Self.Invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Meeting">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Invoice">
+              <PropertyRef Name="MeetingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Meeting__ClientI__5CD6CB2B">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="Meeting" Type="Self.Meeting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Meeting">
+              <PropertyRef Name="ClientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="FoodMenuModelStoreContainer">
           <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Invoice" EntityType="Self.Invoice" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Meeting" EntityType="Self.Meeting" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__Client__UserId__4AB81AF0" Association="Self.FK__Client__UserId__4AB81AF0">
             <End Role="Users" EntitySet="Users" />
             <End Role="Client" EntitySet="Client" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Invoice__ClientI__5FB337D6" Association="Self.FK__Invoice__ClientI__5FB337D6">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Invoice" EntitySet="Invoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Invoice__Meeting__60A75C0F" Association="Self.FK__Invoice__Meeting__60A75C0F">
+            <End Role="Meeting" EntitySet="Meeting" />
+            <End Role="Invoice" EntitySet="Invoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Meeting__ClientI__5CD6CB2B" Association="Self.FK__Meeting__ClientI__5CD6CB2B">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Meeting" EntitySet="Meeting" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -68,30 +151,27 @@
     <edmx:ConceptualModels>
       <Schema Namespace="FoodMenuModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="FoodMenuEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Users" EntityType="FoodMenuModel.User" />
           <EntitySet Name="Clients" EntityType="FoodMenuModel.Client" />
+          <EntitySet Name="Invoices" EntityType="FoodMenuModel.Invoice" />
+          <EntitySet Name="Meetings" EntityType="FoodMenuModel.Meeting" />
+          <EntitySet Name="Users" EntityType="FoodMenuModel.User" />
           <AssociationSet Name="FK__Client__UserId__4AB81AF0" Association="FoodMenuModel.FK__Client__UserId__4AB81AF0">
             <End Role="User" EntitySet="Users" />
             <End Role="Client" EntitySet="Clients" />
           </AssociationSet>
+          <AssociationSet Name="FK__Invoice__ClientI__5FB337D6" Association="FoodMenuModel.FK__Invoice__ClientI__5FB337D6">
+            <End Role="Client" EntitySet="Clients" />
+            <End Role="Invoice" EntitySet="Invoices" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Meeting__ClientI__5CD6CB2B" Association="FoodMenuModel.FK__Meeting__ClientI__5CD6CB2B">
+            <End Role="Client" EntitySet="Clients" />
+            <End Role="Meeting" EntitySet="Meetings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Invoice__Meeting__60A75C0F" Association="FoodMenuModel.FK__Invoice__Meeting__60A75C0F">
+            <End Role="Meeting" EntitySet="Meetings" />
+            <End Role="Invoice" EntitySet="Invoices" />
+          </AssociationSet>
         </EntityContainer>
-        <EntityType Name="User">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Token" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="IsActive" Type="Boolean" Nullable="false" />
-          <Property Name="LogoFile" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="LogoFileBytes" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <Property Name="BusinessId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Clients" Relationship="FoodMenuModel.FK__Client__UserId__4AB81AF0" FromRole="User" ToRole="Client" />
-        </EntityType>
         <EntityType Name="Client">
           <Key>
             <PropertyRef Name="Id" />
@@ -114,6 +194,62 @@
           <Property Name="UserId" Type="Int32" Nullable="false" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="User" Relationship="FoodMenuModel.FK__Client__UserId__4AB81AF0" FromRole="Client" ToRole="User" />
+          <NavigationProperty Name="Invoices" Relationship="FoodMenuModel.FK__Invoice__ClientI__5FB337D6" FromRole="Client" ToRole="Invoice" />
+          <NavigationProperty Name="Meetings" Relationship="FoodMenuModel.FK__Meeting__ClientI__5CD6CB2B" FromRole="Client" ToRole="Meeting" />
+        </EntityType>
+        <EntityType Name="Invoice">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClientId" Type="Int32" Nullable="false" />
+          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MeetingId" Type="Int32" Nullable="false" />
+          <Property Name="Number" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Client" Relationship="FoodMenuModel.FK__Invoice__ClientI__5FB337D6" FromRole="Invoice" ToRole="Client" />
+          <NavigationProperty Name="Meeting" Relationship="FoodMenuModel.FK__Invoice__Meeting__60A75C0F" FromRole="Invoice" ToRole="Meeting" />
+        </EntityType>
+        <EntityType Name="Meeting">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClientId" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Weight" Type="Int32" Nullable="false" />
+          <Property Name="Water" Type="Int32" Nullable="false" />
+          <Property Name="Muscle" Type="Int32" Nullable="false" />
+          <Property Name="FatPercentage" Type="Int32" Nullable="false" />
+          <Property Name="MeetingIndex" Type="Int32" Nullable="false" />
+          <Property Name="ArmMuscleMeasurement" Type="Int32" Nullable="false" />
+          <Property Name="ArmNOMuscleMeasurement" Type="Int32" Nullable="false" />
+          <Property Name="HipMeasurement" Type="Int32" Nullable="false" />
+          <Property Name="StomachMeasurement" Type="Int32" Nullable="false" />
+          <Property Name="ThighMeasurement" Type="Int32" Nullable="false" />
+          <Property Name="FrontHandFat" Type="Int32" Nullable="false" />
+          <Property Name="BackHandFat" Type="Int32" Nullable="false" />
+          <Property Name="ThighFat" Type="Int32" Nullable="false" />
+          <Property Name="BackFat" Type="Int32" Nullable="false" />
+          <Property Name="FatAvrg" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Client" Relationship="FoodMenuModel.FK__Meeting__ClientI__5CD6CB2B" FromRole="Meeting" ToRole="Client" />
+          <NavigationProperty Name="Invoices" Relationship="FoodMenuModel.FK__Invoice__Meeting__60A75C0F" FromRole="Meeting" ToRole="Invoice" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Token" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="LogoFile" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="LogoFileBytes" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="BusinessId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Clients" Relationship="FoodMenuModel.FK__Client__UserId__4AB81AF0" FromRole="User" ToRole="Client" />
         </EntityType>
         <Association Name="FK__Client__UserId__4AB81AF0">
           <End Type="FoodMenuModel.User" Role="User" Multiplicity="1" />
@@ -127,29 +263,48 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Invoice__ClientI__5FB337D6">
+          <End Type="FoodMenuModel.Client" Role="Client" Multiplicity="1" />
+          <End Type="FoodMenuModel.Invoice" Role="Invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Invoice">
+              <PropertyRef Name="ClientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Meeting__ClientI__5CD6CB2B">
+          <End Type="FoodMenuModel.Client" Role="Client" Multiplicity="1" />
+          <End Type="FoodMenuModel.Meeting" Role="Meeting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Meeting">
+              <PropertyRef Name="ClientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Invoice__Meeting__60A75C0F">
+          <End Type="FoodMenuModel.Meeting" Role="Meeting" Multiplicity="1" />
+          <End Type="FoodMenuModel.Invoice" Role="Invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Meeting">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Invoice">
+              <PropertyRef Name="MeetingId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="FoodMenuModelStoreContainer" CdmEntityContainer="FoodMenuEntities">
-          <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="FoodMenuModel.User">
-              <MappingFragment StoreEntitySet="Users">
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="BusinessId" ColumnName="BusinessId" />
-                <ScalarProperty Name="LogoFileBytes" ColumnName="LogoFileBytes" />
-                <ScalarProperty Name="LogoFile" ColumnName="LogoFile" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="Token" ColumnName="Token" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Clients">
             <EntityTypeMapping TypeName="FoodMenuModel.Client">
               <MappingFragment StoreEntitySet="Client">
@@ -169,6 +324,58 @@
                 <ScalarProperty Name="Phone" ColumnName="Phone" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Invoices">
+            <EntityTypeMapping TypeName="FoodMenuModel.Invoice">
+              <MappingFragment StoreEntitySet="Invoice">
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="MeetingId" ColumnName="MeetingId" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Meetings">
+            <EntityTypeMapping TypeName="FoodMenuModel.Meeting">
+              <MappingFragment StoreEntitySet="Meeting">
+                <ScalarProperty Name="FatAvrg" ColumnName="FatAvrg" />
+                <ScalarProperty Name="BackFat" ColumnName="BackFat" />
+                <ScalarProperty Name="ThighFat" ColumnName="ThighFat" />
+                <ScalarProperty Name="BackHandFat" ColumnName="BackHandFat" />
+                <ScalarProperty Name="FrontHandFat" ColumnName="FrontHandFat" />
+                <ScalarProperty Name="ThighMeasurement" ColumnName="ThighMeasurement" />
+                <ScalarProperty Name="StomachMeasurement" ColumnName="StomachMeasurement" />
+                <ScalarProperty Name="HipMeasurement" ColumnName="HipMeasurement" />
+                <ScalarProperty Name="ArmNOMuscleMeasurement" ColumnName="ArmNOMuscleMeasurement" />
+                <ScalarProperty Name="ArmMuscleMeasurement" ColumnName="ArmMuscleMeasurement" />
+                <ScalarProperty Name="MeetingIndex" ColumnName="MeetingIndex" />
+                <ScalarProperty Name="FatPercentage" ColumnName="FatPercentage" />
+                <ScalarProperty Name="Muscle" ColumnName="Muscle" />
+                <ScalarProperty Name="Water" ColumnName="Water" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="FoodMenuModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="BusinessId" ColumnName="BusinessId" />
+                <ScalarProperty Name="LogoFileBytes" ColumnName="LogoFileBytes" />
+                <ScalarProperty Name="LogoFile" ColumnName="LogoFile" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Token" ColumnName="Token" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
