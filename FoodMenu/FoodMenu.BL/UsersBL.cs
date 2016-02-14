@@ -56,7 +56,7 @@ namespace FoodMenu.BL
                 {
                     IUserRepository userRepository = session.GetRepository<IUserRepository>();
 
-                    var userList = userRepository.GetAll().Where(u => u.IsActive).Select(u => new UserModel
+                    var userList = userRepository.Find(u => u.IsActive).Select(u => new UserModel
                     {
                         Id = u.Id,
                         Email = u.Email,

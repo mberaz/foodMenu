@@ -55,14 +55,14 @@ namespace FoodMenu.BL
                 {
                     IClientRepository ClientRepository = session.GetRepository<IClientRepository>();
 
-                    var ClientList = ClientRepository.GetAll().Where(u => u.IsActive).Select(c => new ClientModel
+                    var ClientList = ClientRepository.Find(u => u.IsActive).Select(c => new ClientModel
                     {
                         Id = c.Id,
                         Name = c.Name,
                         Email = c.Email,
                         Phone = c.Phone,
                         Nationalid = c.Nationalid,
-                        Sex=c.Sex,
+                        Sex = c.Sex,
                         Height = c.Height,
                         Weight = c.Weight,
                         FatPercentage = c.FatPercentage,
@@ -77,12 +77,12 @@ namespace FoodMenu.BL
 
                     var parser = new DataTableEntityParser<ClientModel>(requestParams,ClientList.AsQueryable());
 
-                    var list= parser.Parse();
+                    var list = parser.Parse();
                     foreach(var item in list.aaData)
                     {
                         var itemSex = item[4].ToInt();
 
-                        item[4] = Utility.GetDescription(itemSex, typeof(SexEnum));
+                        item[4] = Utility.GetDescription(itemSex,typeof(SexEnum));
 
                     }
 
