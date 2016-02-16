@@ -144,6 +144,7 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="JS\ClientEdit.js" />
+    <Content Include="JS\ClientNew.js" />
     <Content Include="JS\Common.js" />
     <Content Include="JS\extentions\arrayE10ntions - mdn.js" />
     <Content Include="JS\extentions\dateE10ntions.js" />
@@ -218,6 +219,7 @@
     <Content Include="Views\Clients\Index.cshtml" />
     <Content Include="Views\Clients\EditClient.cshtml" />
     <Content Include="Views\Clients\Edit.cshtml" />
+    <Content Include="Views\Clients\NewClient.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

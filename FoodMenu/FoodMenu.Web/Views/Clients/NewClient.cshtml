@@ -1,0 +1,96 @@
+﻿
+@section scripts
+{
+<script src="~/JS/ClientNew.js"></script>
+}
+<br />
+<br />
+<div class="row">
+    <div class="row col-md-5 edit-user-full">
+        <h1>לקוח חדש</h1>
+        @Html.Partial("Edit")
+    </div>
+    <div class="row col-md-5">
+        <h1>פגישה</h1>
+        <form role="form" id="meetingForm">
+            <input type="hidden" class="form-control  " name="ClientId">
+            <div class="form-group">
+                <label for="email">תאריך :</label>
+                <input type="datetime" class="form-control  required" name="Date">
+            </div>
+            <div class="form-group">
+                <label for="pwd">מספר פגישה:</label>
+                <input type="text" class="form-control required" name="MeetingIndex" value="1">
+            </div>
+            <div class="form-group">
+                <label for="pwd">משקל :</label>
+                <input type="text" class="form-control  required" name="Weight">
+            </div>
+
+            <div class="form-group">
+                <label for="pwd">מים:</label>
+                <input type="text" class="form-control  required" name="Water">
+            </div>
+            <div class="form-group">
+                <label for="pwd">שריר:</label>
+                <input type="text" class="form-control  required" name="Muscle">
+            </div>
+
+            <div class="form-group">
+                <label for="pwd">אחוז שומן:</label>
+                <input type="text" class="form-control required" name="FatPercentage">
+            </div>
+            
+            <h2>היקפים</h2>
+            <div class="form-group">
+                <label for="pwd">יד  עם שריר:</label>
+                <input type="text" class="form-control  required" name="ArmMuscleMeasurement">
+            </div>
+
+            <div class="form-group">
+                <label for="pwd">יד בלי שריר:</label>
+                <input type="text" class="form-control  required" name="ArmNOMuscleMeasurement">
+            </div>
+            <div class="form-group">
+                <label for="pwd">מותן:</label>
+                <input type="text" class="form-control required" name="HipMeasurement">
+            </div>
+
+            <div class="form-group">
+                <label for="pwd"> בטן :</label>
+                <input type="text" class="form-control  required" name="StomachMeasurement">
+            </div>
+            <div class="form-group">
+                <label for="pwd">ירך:</label>
+                <input type="text" class="form-control required" name="ThighMeasurement">
+            </div>
+            <h2>שומן</h2>
+            <div class="form-group">
+                <label for="pwd">שומן יד קדמית:</label>
+                <input type="text" class="form-control required" name="FrontHandFat">
+            </div>
+            <div class="form-group">
+                <label for="pwd">שומן יד אחורית:</label>
+                <input type="text" class="form-control required" name="BackHandFat">
+            </div>
+            <div class="form-group">
+                <label for="pwd">שומן ירך:</label>
+                <input type="text" class="form-control required" name="ThighFat">
+            </div>
+            <div class="form-group">
+                <label for="pwd">שומן גב:</label>
+                <input type="text" class="form-control required" name="BackFat">
+            </div>
+            <div class="form-group">
+                <label for="pwd">ממוצע שומן:</label>
+                <input type="text" class="form-control required" name="FatAvrg">
+            </div>
+        </form>
+
+    </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default save user-form-button" id="save-client">שמור</button>
+            <button type="button" class="btn btn-danger user-form-button" data-dismiss="modal">סגור</button>
+        </div>
+    
+</div>

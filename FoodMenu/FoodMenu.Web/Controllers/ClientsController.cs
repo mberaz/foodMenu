@@ -14,6 +14,11 @@ namespace FoodMenu.Web.Controllers
             return View();
         }
 
+        public ActionResult NewClient ()
+        {
+            return View();
+        }
+
         public ActionResult EditClient (int id)
         {
             ViewBag.id = id;
